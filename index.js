@@ -7,25 +7,25 @@ var connection = mysql.createConnection({
   host:'localhost',
   user:'root',
   password:'',
-  database:'userspractise'
+  database:'users'
 })
 
 connection.connect();
 
-connection.query('SELECT * FROM practisekorisnici', (request, data) =>{
+connection.query('SELECT * FROM korisnici', (request, data) =>{
 
   //view-all
-  app.get('/people',
+  app.get('/users',
   (req,res)=>{
     var allUsers = '';
     for(var i = 0; i < data.length; i++){
-      allUsers += data[i].name + ' ' + data[i].lastname + ' ' + data[i].age + ' ' + data[i].mood + ', '; 
+      allUsers += data[i].ID + ' ' + data[i].Ime + ' ' + data[i].Prezime + ' ' + data[i].Email + ', '; 
     }
     res.send(allUsers)
   })
 
   //view-individual-id 
-  app.get('/people/:id', //0, 1, or 2
+  app.get('/users/:id', //0, 1, or 2     <---- kako da bude 1,2, i 3 ?
   (req,res)=>{
     res.send(data[req.params.id])
   })
@@ -35,7 +35,7 @@ connection.query('SELECT * FROM practisekorisnici', (request, data) =>{
 
 app.get('/',
 (req,res)=>{
-  res.send('Hello World. Type in "/people" in the URl. Add "/:id" to see a specific user (0, 1, or 2).')
+  res.send('Hello World. Type in "/users" in the URl. Add "/users/:id" to see a specific user (0, 1, or 2).')
 })
 
 app.listen(3000,
